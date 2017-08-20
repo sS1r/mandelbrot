@@ -44,9 +44,14 @@ void start()
 		{
 			for(unsigned j = 0;j < window.getH();j++)
 			{
-				if(mandelbrot(rect.getPoint(i, j, window.getW(), window.getH()), ITERS))
+				unsigned iters = mandelbrot(rect.getPoint(i, j, window.getW(), window.getH()), ITERS);
+				if(iters == 0)
 				{
-					window.drawPoint(255, 0, 0, i, j);
+					window.drawPoint(0, 0, 0, i, j);
+				}
+				else
+				{
+					window.drawPoint(255, iters*5, 0, i, j);
 				}
 			}
 		}

@@ -1,7 +1,5 @@
 #include "SDLTools.hpp"
 
-#include <SDL2/SDL.h>
-
 void initGraphics()
 {
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)

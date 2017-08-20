@@ -2,37 +2,17 @@
 
 #include "mandelbrot.hpp"
 
-bool mandelbrot(double real, double imag, unsigned iter)
+unsigned mandelbrot(std::complex<double> c, unsigned maxiter)
 {
-	std::complex<double> c(real, imag);
-	std::complex<double> z1(0, 0);
-	std::complex<double> z2(0, 0);
+	std::complex<double> z(0, 0);
 	
-	for(unsigned int i = 0;i < iter;i++)
+	for(unsigned int i = 1;i <= maxiter;i++)
 	{
-		z2 = z1*z1 + c;
-		if(norm(z2) >= 2)
+		z = z*z + c;
+		if(norm(z) >= 2)
 		{
-			return false;
+			return i;
 		}
-		z1 = z2;
 	}
-	return true;
-}
-
-bool mandelbrot(std::complex<double> c, unsigned iter)
-{
-	std::complex<double> z1(0, 0);
-	std::complex<double> z2(0, 0);
-	
-	for(unsigned int i = 0;i < iter;i++)
-	{
-		z2 = z1*z1 + c;
-		if(norm(z2) >= 2)
-		{
-			return false;
-		}
-		z1 = z2;
-	}
-	return true;
+	return 0;
 }
