@@ -1,3 +1,5 @@
 main
 obj/
 src/#*
+src/*pp~
+src/tests
