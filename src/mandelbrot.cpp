@@ -1,5 +1,3 @@
-#include <complex>
-
 #include "mandelbrot.hpp"
 
 unsigned mandelbrot(std::complex<double> c, unsigned maxiter)
