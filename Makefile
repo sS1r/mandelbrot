@@ -22,6 +22,6 @@ $(EXECUTABLE): $(OBJ)
 	 $(CC) $^ -o $@ -Wall $(LFLAGS)
 
 clean:
-	rm main
 	rm -f $(OBJ)
 	rm -df $(ODIR)
+	rm main
