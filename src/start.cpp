@@ -11,6 +11,7 @@ void start()
 {
     const unsigned WINDOW_W = 500;
     const unsigned WINDOW_H = 500;
+    const char* WINDOW_TITLE = "Mandelbrot";
     const unsigned ITERS = 50;
 	
     std::cout << "Starting the program...\n";
@@ -20,20 +21,20 @@ void start()
 	
     initGraphics();
 	
-    Window window(WINDOW_W, WINDOW_H, "Mandelbrot");
+    Window window(WINDOW_W, WINDOW_H, WINDOW_TITLE);
     eventHandler eventhandler;
 
     ComplexRect rect(std::complex<double>(2, 2), std::complex<double>(-2, -2));
-    rect.getMandelbrot(window, ITERS);
-    window.createMandelbrot(ITERS);
-    
+    std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+	window.createMandelbrot(mandelbrotdata);
+	    
     while(!eventhandler.getQuit())
     {
 	eventhandler.update();
 		
 	if(eventhandler.getMousePressed())
 	{
-	    std::cout << rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH()) << std::endl;
+	    //std::cout << rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH()) << std::endl;
 	}
 	
 	window.clear();	
@@ -50,8 +51,9 @@ void start()
 	    std::complex<double> c2 = rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
 
 	    rect.update(c2, c1);
-	    rect.getMandelbrot(window, ITERS);
-	    window.createMandelbrot(ITERS);
+	    
+	    mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+	    window.createMandelbrot(mandelbrotdata);
 	    
 	    std::cout << c1 << " ---- " << c2 << std::endl; 
 	}

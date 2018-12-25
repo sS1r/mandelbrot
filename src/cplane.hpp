@@ -15,8 +15,8 @@ public:
     //Returns a complex point on this plane at pixel coordinates (x,y) when the plane is stretched to fit a h*w pixel plane
     std::complex<double> getPoint(unsigned x, unsigned y, unsigned w, unsigned h) const;
 
-    //Get the Mandelbrot data and insert it into the Window object
-    void getMandelbrot(Window &window, unsigned maxiters) const;
+    //Returns the Mandelbrot data in a vector
+    std::vector<unsigned> getMandelbrot(unsigned W, unsigned H, unsigned maxiters) const;
     
     //Updates the rect's size
     void update(std::complex<double> top_right, std::complex<double> bottom_left);

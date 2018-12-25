@@ -2,27 +2,25 @@
 
 #include <SDL2/SDL.h>
 
-Window::Window(unsigned w, unsigned h, const char* title): mandelbrotData(0)
+Window::Window(unsigned w, unsigned h, const char* title)
 {
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, 0);
     if(!window)
     {
-	throw SDL_GetError();
+		throw SDL_GetError();
     }
 	
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if(!renderer)
     {
-	throw SDL_GetError();
+		throw SDL_GetError();
     }
 
     mandelbrot = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, w, h);
     if(!mandelbrot)
     {
-	throw SDL_GetError();
+		throw SDL_GetError();
     }
-    
-    mandelbrotData.resize(w*h, 0);
 }
 
 Window::~Window()
@@ -32,19 +30,7 @@ Window::~Window()
     SDL_DestroyWindow(window);
 }
 
-void Window::insertMandelbrot(unsigned x, unsigned y, unsigned iters)
-{
-    if(x > getW() || y > getH())
-    {
-	throw "Window::insertMandelbrot: pixel outside Window";
-    }
-    
-    unsigned i = y*getW() + x;
-    mandelbrotData[i] = iters;
-}
-
-
-void Window::createMandelbrot(unsigned maxiters)
+void Window::createMandelbrot(const std::vector<unsigned>& mandelbrotData)
 {
     SDL_SetRenderTarget(renderer, mandelbrot);
 

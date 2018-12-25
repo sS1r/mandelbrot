@@ -18,11 +18,9 @@ public:
     //Fill the window with white color
     void clear();
 
-    //Insert mandelbrot information for rendering
-    void insertMandelbrot(unsigned x, unsigned y, unsigned iters);
-
     //Creates mandelbrot texture
-    void createMandelbrot(unsigned maxiters);
+    //Arguments: mandelbrotData -- vector containing the iteration counts 
+    void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
 
     //Draws mandelbrot texture
     void drawMandelbrot();
@@ -39,7 +37,6 @@ public:
 	
 private:
    
-    std::vector<unsigned> mandelbrotData;
     SDL_Texture* mandelbrot;
     
     SDL_Window* window;

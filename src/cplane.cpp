@@ -15,11 +15,11 @@ std::complex<double> ComplexRect::getPoint(unsigned x, unsigned y, unsigned w, u
 {
     if(x > w || y > h)
     {
-	throw "ComplexRect::getPoint: pixel point (x, y) outside pixel plane.";
+        throw "ComplexRect::getPoint: pixel point (x, y) outside pixel plane.";
     }
     if(w == 0 || h == 0)
     {
-	throw "ComplexRect::getPoint: pixel plane width or height zero.";
+        throw "ComplexRect::getPoint: pixel plane width or height zero.";
     }
 
     double width = (topright - bottomleft).real();
@@ -31,16 +31,21 @@ std::complex<double> ComplexRect::getPoint(unsigned x, unsigned y, unsigned w, u
     return std::complex<double>(real, imag);
 }
 
-void ComplexRect::getMandelbrot(Window &window, unsigned maxiters) const
+std::vector<unsigned> ComplexRect::getMandelbrot(unsigned W, unsigned H, unsigned maxiters) const
 {
-    for(unsigned i = 0;i < window.getW();i++)
+    std::vector<unsigned> ret;
+    ret.resize(H*W, 0);
+    
+    for(unsigned i = 0;i < W;i++)
     {
-	for(unsigned j = 0;j < window.getH();j++)
-	{
-	    unsigned iters = mandelbrot(getPoint(i, j, window.getW(), window.getH()), maxiters);
-	    window.insertMandelbrot(i, j, iters);
-	}
-    }	
+        for(unsigned j = 0;j < H;j++)
+        {
+            unsigned iters = mandelbrot(getPoint(i, j, W, H), maxiters);
+            ret[i + j*W] =  iters;
+        }
+    }
+    
+    return ret;
 }
 
 void ComplexRect::update(std::complex<double> top_right, std::complex<double> bottom_left)
