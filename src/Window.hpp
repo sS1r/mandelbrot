@@ -13,50 +13,50 @@
 class Window
 {
 public:
-    Window();
-    ~Window();
+	Window();
+	~Window();
 
 	//Initializes SDL2 related stuff
 	void init(unsigned w, unsigned h, const char* title);
 
-    //Displays the rendered pixels
-    void update();
+	//Displays the rendered pixels
+	void update();
 
-    //Creates mandelbrot texture
-    //Arguments: mandelbrotData -- vector containing the iteration counts 
-    void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
+	//Creates mandelbrot texture
+	//Arguments: mandelbrotData -- vector containing the iteration counts 
+	void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
 
 	//Draws a rectangle from (x1, y1) to (x2, y2)
-    void createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2);
+	void createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2);
 
 	//Hides the rectangle
 	void hideRect();
 
-    //Draws mandelbrot texture
-    void drawMandelbrot();
-  
+	//Draws mandelbrot texture
+	void drawMandelbrot();
+
 	//Draws the zoom rectangle
 	void drawRect();
-  
+
 	//Fill the window with white color
-    void clear();
-    
-    //Renders everything and updates the display
-    void render();
-  
-    //Get width/height
-    unsigned getW() const;
-    unsigned getH() const;
-	
+	void clear();
+
+	//Renders everything and updates the display
+	void render();
+
+	//Get width/height
+	unsigned getW() const;
+	unsigned getH() const;
+
 private:
 
-    SDL_Texture* mandelbrot;
-    
-    bool rectVisible;
-    SDL_Rect zoomRect;
-    
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+	SDL_Texture* mandelbrot;
+
+	bool rectVisible;
+	SDL_Rect zoomRect;
+
+	SDL_Window* window;
+	SDL_Renderer* renderer;
 };
-       
+
 #endif

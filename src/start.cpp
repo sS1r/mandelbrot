@@ -19,65 +19,65 @@ static ComplexRect rect(std::complex<double>(2, 2), std::complex<double>(-2, -2)
 
 void start()
 {
-    std::cout << "Starting the program..." << std::endl;
-    std::cout << "Window: " << WINDOW_W << "*" << WINDOW_H << std::endl;
-    std::cout << "Iterations: " << ITERS << std::endl;
-	
-    initGraphics();
-    atexit(quitGraphics);
+	std::cout << "Starting the program..." << std::endl;
+	std::cout << "Window: " << WINDOW_W << "*" << WINDOW_H << std::endl;
+	std::cout << "Iterations: " << ITERS << std::endl;
 
-    window.init(WINDOW_W, WINDOW_H, WINDOW_TITLE);
+	initGraphics();
+	atexit(quitGraphics);
 
-    std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
-    window.createMandelbrot(mandelbrotdata);
-	
-    bool quit = false;
-    while(!quit)
-    {
-        getInput();
-        quit = update();
-        render();
-    
-        wait(50);
-    }
-	
-    std::cout << "Exiting..." << std::endl;
+	window.init(WINDOW_W, WINDOW_H, WINDOW_TITLE);
+
+	std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+	window.createMandelbrot(mandelbrotdata);
+
+	bool quit = false;
+	while(!quit)
+	{
+		getInput();
+		quit = update();
+		render();
+
+		wait(50);
+	}
+
+	std::cout << "Exiting..." << std::endl;
 }
 
 bool update()
 {
-    if(eventhandler.getMousePressed())
-    {
-        //std::cout << rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH()) << std::endl;
-        window.createRect(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY());
-    }
-    else
-    {
-        window.hideRect();
-    }
-        
-    if(eventhandler.getMouseReleased())
-    {
-        std::complex<double> c1 = rect.getPoint(eventhandler.getDragX(), eventhandler.getDragY(), window.getW(), window.getH());
-        std::complex<double> c2 = rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
+	if(eventhandler.getMousePressed())
+	{
+		//std::cout << rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH()) << std::endl;
+		window.createRect(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY());
+	}
+	else
+	{
+		window.hideRect();
+	}
 
-        rect.update(c2, c1);
-        
-        std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
-        window.createMandelbrot(mandelbrotdata);
-        
-        std::cout << c1 << " ---- " << c2 << std::endl; 
-    }
-    
-    return eventhandler.getQuit();   
+	if(eventhandler.getMouseReleased())
+	{
+		std::complex<double> c1 = rect.getPoint(eventhandler.getDragX(), eventhandler.getDragY(), window.getW(), window.getH());
+		std::complex<double> c2 = rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
+
+		rect.update(c2, c1);
+
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+		window.createMandelbrot(mandelbrotdata);
+
+		std::cout << c1 << " ---- " << c2 << std::endl;
+	}
+
+	return eventhandler.getQuit();
 }
 
 void getInput()
 {
-    eventhandler.update();
+	eventhandler.update();
 }
 
 void render()
 {
-    window.render();
+	window.render();
 }
