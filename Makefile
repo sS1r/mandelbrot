@@ -1,6 +1,6 @@
 CC=g++
 LFLAGS=-lSDL2
-CFLAGS=-c -std=c++11 -Wall
+CFLAGS=-g -c -std=c++11 -Wall
 
 ODIR=obj
 SDIR=src
