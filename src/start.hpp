@@ -2,8 +2,16 @@
 #define START_HPP
 
 //This function starts the program
-//The code structure introduced here is just experimental
-
 void start();
+
+// Gets the input and handles events
+void getInput();
+
+// Updates the program state
+// Return: true -- continue, false -- quit
+bool update();
+
+// Renderes everything
+void render();
 
 #endif

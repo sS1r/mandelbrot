@@ -6,38 +6,54 @@
 #include <SDL2/SDL.h>
 
 //Class for window management
+//Since this is a very simple program, we add all the rendered textures/objects
+//in this class and just simply call "Window::render()" to render everything.
+//
+//It also takes care of coloring and creating all the rendered elements.
 class Window
 {
 public:
-    Window(unsigned w, unsigned h, const char* title);
+    Window();
     ~Window();
+
+	//Initializes SDL2 related stuff
+	void init(unsigned w, unsigned h, const char* title);
 
     //Displays the rendered pixels
     void update();
-
-    //Fill the window with white color
-    void clear();
 
     //Creates mandelbrot texture
     //Arguments: mandelbrotData -- vector containing the iteration counts 
     void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
 
+	//Draws a rectangle from (x1, y1) to (x2, y2)
+    void createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2);
+
+	//Hides the rectangle
+	void hideRect();
+
     //Draws mandelbrot texture
     void drawMandelbrot();
+  
+	//Draws the zoom rectangle
+	void drawRect();
+  
+	//Fill the window with white color
+    void clear();
     
-    //Colors a pixel with red, green and blue at (x, y)
-    void drawPoint(unsigned r, unsigned g, unsigned b, unsigned x, unsigned y); 
-
-    //Draws a rectangle from (x1, y1) to (x2, y2)
-    void drawRect(unsigned r, unsigned g, unsigned b, unsigned x1, unsigned y1, unsigned x2, unsigned y2);
+    //Renders everything and updates the display
+    void render();
   
     //Get width/height
     unsigned getW() const;
     unsigned getH() const;
 	
 private:
-   
+
     SDL_Texture* mandelbrot;
+    
+    bool rectVisible;
+    SDL_Rect zoomRect;
     
     SDL_Window* window;
     SDL_Renderer* renderer;

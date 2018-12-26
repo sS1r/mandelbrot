@@ -2,7 +2,19 @@
 
 #include <SDL2/SDL.h>
 
-Window::Window(unsigned w, unsigned h, const char* title)
+Window::Window(): mandelbrot(nullptr), rectVisible(false), zoomRect{0, 0, 0, 0}, window(nullptr), renderer(nullptr)
+{
+    
+}
+
+Window::~Window()
+{
+    if(mandelbrot) SDL_DestroyTexture(mandelbrot);
+    if(renderer) SDL_DestroyRenderer(renderer);
+    if(window) SDL_DestroyWindow(window);
+}
+
+void Window::init(unsigned w, unsigned h, const char* title)
 {
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, 0);
     if(!window)
@@ -21,13 +33,6 @@ Window::Window(unsigned w, unsigned h, const char* title)
     {
 		throw SDL_GetError();
     }
-}
-
-Window::~Window()
-{
-    SDL_DestroyTexture(mandelbrot);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
 }
 
 void Window::createMandelbrot(const std::vector<unsigned>& mandelbrotData)
@@ -72,22 +77,36 @@ void Window::clear()
     SDL_RenderClear(renderer);
 }
 
-void Window::drawPoint(unsigned int r, unsigned int g, unsigned int b, unsigned int x, unsigned int y)
+void Window::createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2)
 {
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-    SDL_RenderDrawPoint(renderer, x, y);
+	rectVisible = true;
+	
+    zoomRect.x = x1;
+    zoomRect.y = y1;
+    zoomRect.w = x2 - x1;
+    zoomRect.h = y2 - y1;
 }
 
-void Window::drawRect(unsigned r, unsigned g, unsigned b, unsigned x1, unsigned y1, unsigned x2, unsigned y2)
+void Window::hideRect()
 {
-    SDL_Rect rect;
-    rect.x = x1;
-    rect.y = y1;
-    rect.w = x2 - x1;
-    rect.h = y2 - y1;
-	
-    SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-    SDL_RenderDrawRect(renderer, &rect);
+	rectVisible = false;
+}
+
+void Window::drawRect()
+{
+	if(rectVisible)
+	{
+		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
+		SDL_RenderDrawRect(renderer, &zoomRect);
+	}
+}
+
+void Window::render()
+{
+	clear();
+	drawMandelbrot();
+	drawRect();
+	update();
 }
 
 unsigned Window::getW() const
@@ -103,3 +122,4 @@ unsigned Window::getH() const
     SDL_GetWindowSize(window, NULL, &h);
     return h;
 }
+
