@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-eventHandler::eventHandler(): mouseX(0), mouseY(0), mousePressed(false), quit(false)
+eventHandler::eventHandler(): mouseX(0), mouseY(0), _increaseIters(false), _decreaseIters(false), mousePressed(false), quit(false)
 {
   
 }
@@ -17,6 +17,8 @@ void eventHandler::update()
 	SDL_Event e;
 
 	mouseReleased = false;
+	_increaseIters = false;
+	_decreaseIters = false;
 	
 	while(SDL_PollEvent(&e) != 0)
 	{
@@ -46,6 +48,17 @@ void eventHandler::update()
 			mouseX = e.motion.x;
 			mouseY = e.motion.y;
 		}
+		else if(e.type == SDL_KEYDOWN)
+		{
+			if(e.key.keysym.sym == SDLK_UP)
+			{
+				_increaseIters = true;
+			}
+			if(e.key.keysym.sym == SDLK_DOWN)
+			{
+				_decreaseIters = true;
+			}
+		}
 	}
 }
 
@@ -68,6 +81,16 @@ int eventHandler::getDragY()
 {
 	return dragY;
 }
+
+bool eventHandler::increaseIters()
+{
+	return _increaseIters;
+}	
+
+bool eventHandler::decreaseIters()
+{
+	return _decreaseIters;
+}	
 
 bool eventHandler::getMousePressed()
 {

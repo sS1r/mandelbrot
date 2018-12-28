@@ -3,19 +3,21 @@
 #include "eventHandler.hpp"
 #include "SDLTools.hpp"
 #include "cplane.hpp"
+#include "inputReader.hpp"
 
 #include <iostream>
 #include <complex>
 #include <cstdlib>
+#include <thread>
 
 const unsigned WINDOW_W = 500;
 const unsigned WINDOW_H = 500;
 const char* WINDOW_TITLE = "Mandelbrot";
-const unsigned ITERS = 50;
+unsigned ITERS = 50;
 
 static Window window;
 static eventHandler eventhandler;
-static ComplexRect rect(std::complex<double>(2, 2), std::complex<double>(-2, -2));
+static ComplexRect rect(std::complex<double>(0.8, 1.2), std::complex<double>(-1.6, -1.2));
 
 void start()
 {
@@ -31,6 +33,9 @@ void start()
 	std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
 	window.createMandelbrot(mandelbrotdata);
 
+	std::thread inputreader(&InputReader::readConsole, &glbInputReader);
+	inputreader.detach();
+
 	bool quit = false;
 	while(!quit)
 	{
@@ -41,6 +46,12 @@ void start()
 		wait(50);
 	}
 
+	glbInputReader.close();
+	while(glbInputReader.running())
+	{
+		wait(10);
+	}
+	
 	std::cout << "Exiting..." << std::endl;
 }
 
@@ -48,7 +59,6 @@ bool update()
 {
 	if(eventhandler.getMousePressed())
 	{
-		//std::cout << rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH()) << std::endl;
 		window.createRect(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY());
 	}
 	else
@@ -65,10 +75,21 @@ bool update()
 
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
 		window.createMandelbrot(mandelbrotdata);
-
-		std::cout << c1 << " ---- " << c2 << std::endl;
 	}
-
+	
+	if(eventhandler.decreaseIters())
+	{
+		ITERS -= 10;
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+		window.createMandelbrot(mandelbrotdata);
+	}
+	else if(eventhandler.increaseIters())
+	{
+		ITERS += 10;
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), ITERS);
+		window.createMandelbrot(mandelbrotdata);
+	}
+	
 	return eventhandler.getQuit();
 }
 

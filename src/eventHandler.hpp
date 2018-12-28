@@ -18,6 +18,9 @@ public:
 	int getDragX();
 	int getDragY();
 	
+	bool increaseIters();
+	bool decreaseIters();
+	
 	bool getMousePressed();
 	bool getMouseReleased();
 	
@@ -31,6 +34,10 @@ private:
 	//Original click position when "dragging" with left click
 	int dragX;
 	int dragY;
+
+	//Iteration count management
+	bool _increaseIters;
+	bool _decreaseIters;
 
 	//Mouse left button state
 	bool mousePressed;
