@@ -4,6 +4,7 @@
 #include "SDLTools.hpp"
 #include "cplane.hpp"
 #include "inputReader.hpp"
+#include "tools.hpp"
 
 #include <iostream>
 #include <complex>
@@ -108,6 +109,11 @@ bool update()
 		rect.update(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
+	}
+
+	if(glbInputReader.getSave())
+	{
+		window.saveMandelbrotToPNG(genFileName() + ".bmp");
 	}
 
 	int tmp_iters = glbInputReader.getIters();

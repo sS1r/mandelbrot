@@ -2,6 +2,7 @@
 #define WINDOW_HPP
 
 #include <vector>
+#include <string>
 
 #include <SDL2/SDL.h>
 
@@ -23,7 +24,7 @@ public:
 	void update();
 
 	//Creates mandelbrot texture
-	//Arguments: mandelbrotData -- vector containing the iteration counts 
+	//Arguments: mandelbrotData -- vector containing the iteration counts
 	void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
 
 	//Draws a rectangle from (x1, y1) to (x2, y2)
@@ -47,6 +48,9 @@ public:
 	//Get width/height
 	unsigned getW() const;
 	unsigned getH() const;
+
+	//Saves the mandelbrot texture to PNG
+	void saveMandelbrotToPNG(std::string filename);
 
 private:
 

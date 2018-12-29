@@ -1,4 +1,5 @@
 #include "inputReader.hpp"
+#include "tools.hpp"
 
 #include <iostream>
 #include <sstream>
@@ -60,6 +61,10 @@ void InputReader::readConsole()
 		else if(cmd == "status")
 		{
 
+		}
+		else if(cmd == "save")
+		{
+			save = true;
 		}
 		else if(cmd == "iters")
 		{
@@ -125,6 +130,16 @@ int InputReader::getIters()
 		return ret;
 	}
 	return 0;
+}
+
+bool InputReader::getSave()
+{
+	if(save)
+	{
+		save = false;
+		return true;
+	}
+	return false;
 }
 
 void InputReader::_readstdin()

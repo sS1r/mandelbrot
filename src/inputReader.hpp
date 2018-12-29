@@ -4,7 +4,7 @@
 #include <string>
 #include <mutex>
 
-//Object for reading input from command line
+//Class for reading input from command line
 //Contains thread hackery that allows async input
 class InputReader
 {
@@ -26,11 +26,15 @@ class InputReader
 		//Is the iters command given
 		int getIters();
 
+		//Is the save command given
+		bool getSave();
+
 	private:
 
 		// For communication
 		int iters;
 		bool reset;
+		bool save;
 
 		//For internal operation
 		bool _quit;

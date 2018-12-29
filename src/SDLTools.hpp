@@ -1,12 +1,6 @@
 #ifndef SDLTOOLS_HPP
 #define SDLTOOLS_HPP
 
-#include <vector>
-
-#include <SDL2/SDL.h>
-
-#include "Window.hpp"
-
 //Initializes SDL2
 void initGraphics();
 
