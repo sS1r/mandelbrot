@@ -40,7 +40,7 @@ void start()
 	window.init(WINDOW_W, WINDOW_H, WINDOW_TITLE);
 
 	std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-	window.createMandelbrot(mandelbrotdata);
+	window.createMandelbrot(mandelbrotdata, iters);
 
 	std::thread inputreader(&InputReader::readConsole, &glbInputReader);
 	inputreader.detach();
@@ -88,27 +88,27 @@ bool update()
 		rect.update(c2, c1);
 
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-		window.createMandelbrot(mandelbrotdata);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	if(eventhandler.decreaseIters())
 	{
 		iters -= 10;
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-		window.createMandelbrot(mandelbrotdata);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 	else if(eventhandler.increaseIters())
 	{
 		iters += 10;
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-		window.createMandelbrot(mandelbrotdata);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	if(glbInputReader.getReset())
 	{
 		rect.update(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-		window.createMandelbrot(mandelbrotdata);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	if(glbInputReader.getSave())
@@ -121,7 +121,7 @@ bool update()
 	{
 		iters = tmp_iters;
 		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
-		window.createMandelbrot(mandelbrotdata);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	// Quit can occur either by

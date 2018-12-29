@@ -25,7 +25,7 @@ public:
 
 	//Creates mandelbrot texture
 	//Arguments: mandelbrotData -- vector containing the iteration counts
-	void createMandelbrot(const std::vector<unsigned>& mandelbrotData);
+	void createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsigned maxiters);
 
 	//Draws a rectangle from (x1, y1) to (x2, y2)
 	void createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2);
