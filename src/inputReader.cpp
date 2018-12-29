@@ -3,49 +3,51 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
-	
+
 
 InputReader glbInputReader;
 
-InputReader::InputReader(): iters(0), reset(false), terminate(false), _running(false)
+InputReader::InputReader(): iters(0), reset(false), _quit(false), _running(false)
 {
-	
+
 }
 
 void InputReader::readConsole()
 {
 	_running = true;
-	
+
 	std::cout << "Type 'help' for list of commands" << std::endl;
 	std::cout << std::endl;
-	
-	while(!terminate)
+
+	while(!_quit)
 	{
 		std::string cmd;
 		std::stringstream inputss;
-		
+
 		_mutex.lock();
 		_input.clear();
 		_mutex.unlock();
-		
+
 		std::cout << "Mandelbrot> ";
-		
+
 		// Block for running the input reader thread for async input
 		{
-			// Start the thread 
+			// Start the thread
 			std::thread inputreader(&InputReader::_readstdin, this);
 			inputreader.detach();
-		
+
 			// Wait until some input is received
 			while(_input.empty())
 			{
-				std::this_thread::yield();
+				//sleep_for seems to give a better performance than yield
+				//std::this_thread::yield();
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 		}
-		
+
 		inputss.str(_input);
 		inputss >> cmd;
-		
+
 		if(cmd == "help")
 		{
 			std::cout << "help -- show this help and exit" << std::endl;
@@ -57,7 +59,7 @@ void InputReader::readConsole()
 		}
 		else if(cmd == "status")
 		{
-			
+
 		}
 		else if(cmd == "iters")
 		{
@@ -69,26 +71,26 @@ void InputReader::readConsole()
 			}
 			else
 			{
-				iters = iters;
+				iters = _iters;
 			}
 		}
 		else if(cmd == "reset")
 		{
-			
+			reset = true;
 		}
 		else if(cmd == "quit")
 		{
-			terminate = true;
+			_quit = true;
 		}
 		else
 		{
-			std::cout << "Command '" << cmd << "' is not valid!" << std::endl; 
+			std::cout << "Command '" << cmd << "' is not valid!" << std::endl;
 		}
 	}
-	
-	std::cout << std::endl;
+
+	std::cout << std::endl << std::endl;
 	std::cout << "Closing the prompt..." << std::endl;
-	
+
 	_running = false;
 }
 
@@ -104,6 +106,27 @@ bool InputReader::running()
 	return _running;
 }
 
+bool InputReader::getReset()
+{
+	if(reset)
+	{
+		reset = false;
+		return true;
+	}
+	return false;
+}
+
+int InputReader::getIters()
+{
+	if(iters != 0)
+	{
+		int ret = iters;
+		iters = 0;
+		return ret;
+	}
+	return 0;
+}
+
 void InputReader::_readstdin()
 {
 	std::string in;
@@ -112,7 +135,7 @@ void InputReader::_readstdin()
 	{
 		in = "-";
 	}
-	
+
 	_mutex.lock();
 	_input = in;
 	_mutex.unlock();

@@ -16,7 +16,7 @@ void quitGraphics();
 //Wait for ms milliseconds
 void wait(unsigned ms);
 
-//Creates new texture from pixels
-SDL_Texture* createTexture(const Window& window, std::vector<std::vector<unsigned>> pixels);
+//Gets milliseconds from start of SDL2
+unsigned getTicks();
 
 #endif

@@ -17,3 +17,8 @@ void wait(unsigned ms)
 {
 	SDL_Delay(ms);
 }
+
+unsigned getTicks()
+{
+	return SDL_GetTicks();
+}
