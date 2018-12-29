@@ -1,5 +1,5 @@
 CC=g++
-LFLAGS=-lSDL2 -pthread
+LFLAGS=-lSDL2 -lSDL2_image -pthread
 CFLAGS=-g -c -std=c++11 -Wall
 
 ODIR=obj

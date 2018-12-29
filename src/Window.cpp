@@ -1,6 +1,7 @@
 #include "Window.hpp"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 Window::Window(): mandelbrot(nullptr), rectVisible(false), zoomRect{0, 0, 0, 0}, window(nullptr), renderer(nullptr)
 {
@@ -136,7 +137,7 @@ void Window::saveMandelbrotToPNG(std::string filename)
     SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
 
     //Save
-    SDL_SaveBMP(surface, filename.c_str());
+	IMG_SavePNG(surface, filename.c_str());
 
 	//Restore the tartget and deallocate surface
     SDL_SetRenderTarget(renderer, target);

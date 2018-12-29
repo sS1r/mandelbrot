@@ -113,7 +113,7 @@ bool update()
 
 	if(glbInputReader.getSave())
 	{
-		window.saveMandelbrotToPNG(genFileName() + ".bmp");
+		window.saveMandelbrotToPNG(genFileName());
 	}
 
 	int tmp_iters = glbInputReader.getIters();
