@@ -12,6 +12,7 @@
 
 
 const unsigned UPDATE_RATE = 60; //This is also the FPS
+const unsigned THREADS = 8;
 
 const unsigned WINDOW_W = 500;
 const unsigned WINDOW_H = 500;
@@ -37,7 +38,7 @@ void start()
 
 	window.init(WINDOW_W, WINDOW_H, WINDOW_TITLE);
 
-	std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+	std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 	window.createMandelbrot(mandelbrotdata);
 
 	std::thread inputreader(&InputReader::readConsole, &glbInputReader);
@@ -85,27 +86,27 @@ bool update()
 		std::complex<double> c2 = rect.getPoint(eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
 		rect.update(c2, c1);
 
-		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
 	}
 
 	if(eventhandler.decreaseIters())
 	{
 		iters -= 10;
-		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
 	}
 	else if(eventhandler.increaseIters())
 	{
 		iters += 10;
-		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
 	}
 
 	if(glbInputReader.getReset())
 	{
 		rect.update(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
-		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
 	}
 
@@ -113,7 +114,7 @@ bool update()
 	if(tmp_iters != 0)
 	{
 		iters = tmp_iters;
-		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters);
+		std::vector<unsigned> mandelbrotdata = rect.getMandelbrot(window.getH(), window.getW(), iters, THREADS);
 		window.createMandelbrot(mandelbrotdata);
 	}
 

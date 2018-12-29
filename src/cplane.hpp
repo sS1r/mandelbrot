@@ -16,7 +16,7 @@ public:
 	std::complex<double> getPoint(unsigned x, unsigned y, unsigned w, unsigned h) const;
 
 	//Returns the Mandelbrot data in a vector
-	std::vector<unsigned> getMandelbrot(unsigned W, unsigned H, unsigned maxiters) const;
+	std::vector<unsigned> getMandelbrot(unsigned W, unsigned H, unsigned maxiters, int threads = 1) const;
 
 	//Updates the rect's size
 	void update(std::complex<double> top_right, std::complex<double> bottom_left);
