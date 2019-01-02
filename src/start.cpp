@@ -26,7 +26,6 @@ const std::complex<double> DEFAULT_BOTTOMLEFT(-1.6, -1.2);
 static Window window;
 static eventHandler eventhandler;
 static Mandelbrot mandelbrot(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
-unsigned iters = DEFAULT_ITERS;
 
 void start()
 {
@@ -39,8 +38,11 @@ void start()
 
 	window.init(WINDOW_W, WINDOW_H, WINDOW_TITLE);
 
+	mandelbrot.setIters(DEFAULT_ITERS);
+	mandelbrot.setThreads(THREADS);
+
 	std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-	window.createMandelbrot(mandelbrotdata, iters);
+	window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 
 	std::thread inputreader(&InputReader::readConsole, &glbInputReader);
 	inputreader.detach();
@@ -84,29 +86,28 @@ bool update()
 	if(eventhandler.getMouseReleased())
 	{
 		mandelbrot.resize(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
-
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 
 	if(eventhandler.decreaseIters())
 	{
-		iters -= 10;
+		mandelbrot.setIters(mandelbrot.getIters() - 10);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 	else if(eventhandler.increaseIters())
 	{
-		iters += 10;
+		mandelbrot.setIters(mandelbrot.getIters() + 10);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 
 	if(glbInputReader.getReset())
 	{
 		mandelbrot.resize(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 
 	if(glbInputReader.getSave())
@@ -117,9 +118,9 @@ bool update()
 	int tmp_iters = glbInputReader.getIters();
 	if(tmp_iters != 0)
 	{
-		iters = tmp_iters;
+		mandelbrot.setIters(tmp_iters);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 
 	// Quit can occur either by

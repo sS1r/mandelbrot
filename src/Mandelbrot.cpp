@@ -48,9 +48,29 @@ void Mandelbrot::setIters(unsigned maxiters)
 	_maxiters = maxiters;
 }
 
+void Mandelbrot::setThreads(unsigned threads)
+{
+	_threads = threads;
+}
+
 void Mandelbrot::setStyle(RenderStyle style)
 {
 	_style = style;
+}
+
+unsigned Mandelbrot::getIters()
+{
+	return _maxiters;
+}
+
+unsigned Mandelbrot::getThreads()
+{
+	return _threads;
+}
+
+Mandelbrot::RenderStyle Mandelbrot::getStyle()
+{
+	return _style;
 }
 
 std::vector<unsigned> Mandelbrot::getMandelbrot(unsigned W, unsigned H)

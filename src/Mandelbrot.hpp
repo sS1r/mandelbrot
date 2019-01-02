@@ -25,15 +25,21 @@ class Mandelbrot
 		// Resize by two pixel plane points forming a rectangle
 		void resize(unsigned x1, unsigned y1, unsigned x2, unsigned y2, unsigned w, unsigned h);
 
-		// Set other values
-		void setIters(unsigned iters);
+		// Set/Get other values
+		void setIters(unsigned maxiters);
+		void setThreads(unsigned threads);
 		void setStyle(RenderStyle style);
+
+		unsigned getIters();
+		unsigned getThreads();
+		RenderStyle getStyle();
 
 		// Fundamental mandelbrot calculation function
 		static unsigned mandelbrot(std::complex<double> c, unsigned maxiter);
 
 		// Computes the Mandelbrot data vector for a W*H sized window
 		std::vector<unsigned> getMandelbrot(unsigned W, unsigned H);
+
 
 	private:
 
