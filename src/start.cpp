@@ -5,6 +5,7 @@
 #include "cplane.hpp"
 #include "inputReader.hpp"
 #include "tools.hpp"
+#include "Mandelbrot.hpp"
 
 #include <iostream>
 #include <complex>

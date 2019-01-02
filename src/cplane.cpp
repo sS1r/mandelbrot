@@ -1,5 +1,5 @@
-#include "mandelbrot.hpp"
 #include "cplane.hpp"
+#include "Mandelbrot.hpp"
 
 #include <thread>
 #include <iostream>
@@ -49,7 +49,7 @@ std::vector<unsigned> ComplexRect::getMandelbrot(unsigned W, unsigned H, unsigne
 		{
 			unsigned x = i % W;
 			unsigned y = i / W;
-			unsigned iters = mandelbrot(getPoint(x, y, W, H), maxiters);
+			unsigned iters = Mandelbrot::mandelbrot(getPoint(x, y, W, H), maxiters);
 			ret[i] = iters;
 		}
 	};
