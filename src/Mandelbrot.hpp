@@ -19,13 +19,21 @@ class Mandelbrot
 		// Construct new
 		Mandelbrot(std::complex<double> topright, std::complex<double> bottomleft);
 
-		// Set different values
-		setPosition(std::complex<double> _topright, std::complex<double> _bottomleft);
-		setIters(unsigned iters);
-		setStyle(RenderStyle style);
+		// Resize by raw complex coordinates
+		void resize(std::complex<double> topright, std::complex<double> bottomleft);
+
+		// Resize by two pixel plane points forming a rectangle
+		void resize(unsigned x1, unsigned y1, unsigned x2, unsigned y2, unsigned w, unsigned h);
+
+		// Set other values
+		void setIters(unsigned iters);
+		void setStyle(RenderStyle style);
 
 		// Fundamental mandelbrot calculation function
 		static unsigned mandelbrot(std::complex<double> c, unsigned maxiter);
+
+		// Computes the Mandelbrot data vector for a W*H sized window
+		std::vector<unsigned> getMandelbrot(unsigned W, unsigned H);
 
 	private:
 
@@ -36,7 +44,7 @@ class Mandelbrot
 		std::vector<unsigned> _mandelbrotdata;
 
 		// Max iterations in the mandelbrot calculations
-		unsigned _iters;
+		unsigned _maxiters;
 
 		// Thread count for the mandelbrot calculation
 		unsigned _threads;
