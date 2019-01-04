@@ -4,4 +4,3 @@ mandelbrot/
 src/#*
 src/*pp~
 src/tests
-indent.sh

@@ -128,19 +128,19 @@ void Window::saveMandelbrotToPNG(std::string filename)
 {
 	//Change target to texture
 	SDL_Texture* target = SDL_GetRenderTarget(renderer);
-    SDL_SetRenderTarget(renderer, mandelbrot);
+	SDL_SetRenderTarget(renderer, mandelbrot);
 
-    //Create an empty surface and copy the pixel data from the renderer
-    int width, height;
-    SDL_QueryTexture(mandelbrot, NULL, NULL, &width, &height);
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-    SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
+	//Create an empty surface and copy the pixel data from the renderer
+	int width, height;
+	SDL_QueryTexture(mandelbrot, NULL, NULL, &width, &height);
+	SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+	SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
 
-    //Save
+	//Save
 	IMG_SavePNG(surface, filename.c_str());
 
 	//Restore the tartget and deallocate surface
-    SDL_SetRenderTarget(renderer, target);
-    SDL_FreeSurface(surface);
+	SDL_SetRenderTarget(renderer, target);
+	SDL_FreeSurface(surface);
 }
 
