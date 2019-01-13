@@ -90,24 +90,16 @@ bool update()
 		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 
-	if(eventhandler.decreaseIters())
-	{
-		mandelbrot.setIters(mandelbrot.getIters() - 10);
-		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
-	}
-	else if(eventhandler.increaseIters())
-	{
-		mandelbrot.setIters(mandelbrot.getIters() + 10);
-		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
-	}
-
 	if(glbInputReader.getReset())
 	{
 		mandelbrot.resize(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
 		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
+	}
+
+	if(glbInputReader.getStatus())
+	{
+		glbInputReader.printStatus(mandelbrot);
 	}
 
 	if(glbInputReader.getSave())

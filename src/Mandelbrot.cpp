@@ -58,17 +58,17 @@ void Mandelbrot::setStyle(RenderStyle style)
 	_style = style;
 }
 
-unsigned Mandelbrot::getIters()
+unsigned Mandelbrot::getIters() const
 {
 	return _maxiters;
 }
 
-unsigned Mandelbrot::getThreads()
+unsigned Mandelbrot::getThreads() const
 {
 	return _threads;
 }
 
-Mandelbrot::RenderStyle Mandelbrot::getStyle()
+Mandelbrot::RenderStyle Mandelbrot::getStyle() const
 {
 	return _style;
 }
@@ -116,4 +116,13 @@ std::vector<unsigned> Mandelbrot::getMandelbrot(unsigned W, unsigned H)
 	}
 
 	return _mandelbrotdata;
+}
+
+std::ostream& operator<<(std::ostream &out, const Mandelbrot &m)
+{
+	out << "Iterations: " << m.getIters() << std::endl;
+	out << "Threads: " << m.getThreads() << std::endl;
+	out << m.rect;
+
+	return out;
 }

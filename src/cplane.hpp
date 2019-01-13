@@ -17,9 +17,15 @@ public:
 
 	//Updates the rect's size
 	void resize(std::complex<double> top_right, std::complex<double> bottom_left);
+
+	//For printing info
+	friend std::ostream& operator<<(std::ostream &out, const ComplexRect &c);
+
 private:
 	std::complex<double> topright;
 	std::complex<double> bottomleft;
 };
+
+std::ostream& operator<<(std::ostream &out, const ComplexRect &c);
 
 #endif

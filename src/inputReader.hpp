@@ -4,6 +4,8 @@
 #include <string>
 #include <mutex>
 
+#include "Mandelbrot.hpp"
+
 //Class for reading input from command line
 //Contains thread hackery that allows async input
 class InputReader
@@ -26,8 +28,14 @@ class InputReader
 		//Is the iters command given
 		int getIters();
 
+		//Is the status command given
+		bool getStatus();
+
 		//Is the save command given
 		bool getSave();
+
+		//Print the mandelbrot status in a controlled manner
+		void printStatus(const Mandelbrot &mandelbrot);
 
 	private:
 
@@ -35,6 +43,7 @@ class InputReader
 		int iters;
 		bool reset;
 		bool save;
+		bool status;
 
 		//For internal operation
 		bool _quit;

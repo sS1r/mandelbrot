@@ -30,9 +30,9 @@ class Mandelbrot
 		void setThreads(unsigned threads);
 		void setStyle(RenderStyle style);
 
-		unsigned getIters();
-		unsigned getThreads();
-		RenderStyle getStyle();
+		unsigned getIters() const;
+		unsigned getThreads() const;
+		RenderStyle getStyle() const;
 
 		// Fundamental mandelbrot calculation function
 		static unsigned mandelbrot(std::complex<double> c, unsigned maxiter);
@@ -40,6 +40,8 @@ class Mandelbrot
 		// Computes the Mandelbrot data vector for a W*H sized window
 		std::vector<unsigned> getMandelbrot(unsigned W, unsigned H);
 
+		// For printing status
+		friend std::ostream& operator<<(std::ostream &out, const Mandelbrot &m);
 
 	private:
 
@@ -58,5 +60,7 @@ class Mandelbrot
 		// Rendering style
 		RenderStyle _style;
 };
+
+std::ostream& operator<<(std::ostream &out, const Mandelbrot &m);
 
 #endif

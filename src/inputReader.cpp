@@ -55,12 +55,16 @@ void InputReader::readConsole()
 			std::cout << "status -- view various info" << std::endl;
 			std::cout << "iters N -- set maximum iterations to N" << std::endl;
 			std::cout << "reset -- reset to original zoom/position" << std::endl;
-			std::cout << "quit -- quits the program" << std::endl;
+			std::cout << "quit | q | exit -- quits the program" << std::endl;
 			std::cout << "save -- saves image with default filename" << std::endl;
 		}
 		else if(cmd == "status")
 		{
-
+			status = true;
+			while(status)
+			{
+				std::this_thread::yield();
+			}
 		}
 		else if(cmd == "save")
 		{
@@ -83,7 +87,7 @@ void InputReader::readConsole()
 		{
 			reset = true;
 		}
-		else if(cmd == "quit")
+		else if(cmd == "quit" || cmd == "q" || cmd == "exit")
 		{
 			_quit = true;
 		}
@@ -97,6 +101,17 @@ void InputReader::readConsole()
 	std::cout << "Closing the prompt..." << std::endl;
 
 	_running = false;
+}
+
+void InputReader::printStatus(const Mandelbrot &mandelbrot)
+{
+	if(status)
+	{
+		std::cout << std::endl;
+		std::cout << mandelbrot << std::endl;
+		std::cout << std::endl;
+	}
+	status = false;
 }
 
 void InputReader::close()
@@ -140,6 +155,11 @@ bool InputReader::getSave()
 		return true;
 	}
 	return false;
+}
+
+bool InputReader::getStatus()
+{
+	return status;
 }
 
 void InputReader::_readstdin()

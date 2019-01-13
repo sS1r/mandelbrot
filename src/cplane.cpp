@@ -38,3 +38,16 @@ void ComplexRect::resize(std::complex<double> top_right, std::complex<double> bo
 	topright = top_right;
 	bottomleft = bottom_left;
 }
+
+
+std::ostream& operator<<(std::ostream &out, const ComplexRect &c)
+{
+	const char* topright_sign = c.topright.imag() >= 0 ? " + " : " - ";
+	const char* bottomleft_sign = c.bottomleft.imag() >= 0 ? " + " : " - ";
+
+	std::cout << "Top right corner: " << c.topright.real() << topright_sign << std::abs(c.topright.imag()) << "i" << std::endl;
+	std::cout << "Bottom left corner: " << c.bottomleft.real() << bottomleft_sign << std::abs(c.bottomleft.imag()) << "i";
+
+	return out;
+}
+
