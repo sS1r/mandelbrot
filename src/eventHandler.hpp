@@ -15,6 +15,9 @@ public:
 	int getMouseX();
 	int getMouseY();
 
+	int getDragSquareX();
+	int getDragSquareY();
+
 	int getDragX();
 	int getDragY();
 

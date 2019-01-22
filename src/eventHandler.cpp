@@ -2,6 +2,8 @@
 
 #include <SDL2/SDL.h>
 
+#include <cmath>
+
 eventHandler::eventHandler(): mouseX(0), mouseY(0), mousePressed(false), quit(false)
 {
 
@@ -61,6 +63,22 @@ int eventHandler::getMouseX()
 int eventHandler::getMouseY()
 {
 	return mouseY;
+}
+
+int eventHandler::getDragSquareX()
+{
+	unsigned sideX = std::abs(dragX - mouseX);
+	unsigned sideY = std::abs(dragY - mouseY);
+
+	return sideX < sideY ? (mouseX) : (dragX + (mouseX > dragX ? (sideY) : (-sideY)));
+}
+
+int eventHandler::getDragSquareY()
+{
+	unsigned sideX = std::abs(dragX - mouseX);
+	unsigned sideY = std::abs(dragY - mouseY);
+
+	return sideY < sideX ? (mouseY) : (dragY + (mouseY > dragY ? (sideX) : (-sideX)));
 }
 
 int eventHandler::getDragX()

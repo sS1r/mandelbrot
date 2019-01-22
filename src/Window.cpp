@@ -102,10 +102,19 @@ void Window::drawRect()
 	}
 }
 
+void Window::drawHelper()
+{
+	if(rectVisible)
+	{
+		// TODO
+	}
+}
+
 void Window::render()
 {
 	clear();
 	drawMandelbrot();
+	drawHelper();
 	drawRect();
 	update();
 }

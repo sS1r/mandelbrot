@@ -74,9 +74,13 @@ void start()
 
 bool update()
 {
+	unsigned winW = window.getW();
+	unsigned winH = window.getH();
+	unsigned iters = mandelbrot.getIters();
+
 	if(eventhandler.getMousePressed())
 	{
-		window.createRect(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY());
+		window.createRect(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getDragSquareX(), eventhandler.getDragSquareY());
 	}
 	else
 	{
@@ -85,16 +89,16 @@ bool update()
 
 	if(eventhandler.getMouseReleased())
 	{
-		mandelbrot.resize(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getMouseX(), eventhandler.getMouseY(), window.getW(), window.getH());
-		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
+		mandelbrot.resize(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getDragSquareX(), eventhandler.getDragSquareY(), winW, winH);
+		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	if(glbInputReader.getReset())
 	{
 		mandelbrot.resize(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
-		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
+		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
+		window.createMandelbrot(mandelbrotdata, iters);
 	}
 
 	if(glbInputReader.getStatus())
@@ -111,7 +115,7 @@ bool update()
 	if(tmp_iters != 0)
 	{
 		mandelbrot.setIters(tmp_iters);
-		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
+		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
 		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
 	}
 

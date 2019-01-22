@@ -39,6 +39,9 @@ public:
 	//Draws the zoom rectangle
 	void drawRect();
 
+	//Draw some helper lines
+	void drawHelper();
+
 	//Fill the window with white color
 	void clear();
 
