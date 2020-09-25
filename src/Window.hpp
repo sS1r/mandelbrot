@@ -6,6 +6,8 @@
 
 #include <SDL2/SDL.h>
 
+#include "Mandelbrot.hpp"
+
 //Class for window management
 //Since this is a very simple program, we add all the rendered textures/objects
 //in this class and just simply call "Window::render()" to render everything.
@@ -25,7 +27,7 @@ public:
 
 	//Creates mandelbrot texture
 	//Arguments: mandelbrotData -- vector containing the iteration counts
-	void createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsigned maxiters);
+	void createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsigned maxiters, Mandelbrot::RenderStyle style);
 
 	//Draws a rectangle from (x1, y1) to (x2, y2)
 	void createRect(unsigned x1, unsigned y1, unsigned x2, unsigned y2);

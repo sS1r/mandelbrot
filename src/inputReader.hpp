@@ -28,6 +28,9 @@ class InputReader
 		//Is the iters command given
 		int getIters();
 
+		//Is the style command given
+		int getStyle();
+
 		//Is the status command given
 		bool getStatus();
 
@@ -41,6 +44,7 @@ class InputReader
 
 		// For communication
 		int iters;
+		int style;
 		bool reset;
 		bool save;
 		bool status;

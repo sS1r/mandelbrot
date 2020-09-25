@@ -36,7 +36,7 @@ void Window::init(unsigned w, unsigned h, const char* title)
 	}
 }
 
-void Window::createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsigned maxiters)
+void Window::createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsigned maxiters, Mandelbrot::RenderStyle style)
 {
 	SDL_SetRenderTarget(renderer, mandelbrot);
 
@@ -50,7 +50,18 @@ void Window::createMandelbrot(const std::vector<unsigned>& mandelbrotData, unsig
 		}
 		else
 		{
-			SDL_SetRenderDrawColor(renderer, 255, 255 * float(iters) / maxiters, 0, 255);
+			if(style == Mandelbrot::RenderStyle::STYLE_HEAT)
+			{
+				SDL_SetRenderDrawColor(renderer, 255, 255 * float(iters) / maxiters, 0, 255);
+			}
+			else if(style == Mandelbrot::RenderStyle::STYLE_COLD)
+			{
+				SDL_SetRenderDrawColor(renderer, 0, 255 * float(iters) / maxiters, 255, 255);
+			}
+			else
+			{
+				SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+			}
 		}
 
 		unsigned y = i / getW();

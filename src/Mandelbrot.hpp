@@ -2,6 +2,7 @@
 #define MANDELBROT_HPP
 
 #include <complex>
+#include <vector>
 
 #include "cplane.hpp"
 
@@ -12,6 +13,7 @@ class Mandelbrot
 		// How the plot will be rendered
 		enum RenderStyle
 		{
+			STYLE_NONE = 0,
 			STYLE_HEAT = 1,
 			STYLE_COLD = 2
 		};

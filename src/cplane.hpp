@@ -3,8 +3,6 @@
 
 #include <complex>
 
-#include "Window.hpp"
-
 //This class implements a rectangular piece on a complex plane
 class ComplexRect
 {

@@ -8,7 +8,7 @@
 
 InputReader glbInputReader;
 
-InputReader::InputReader(): iters(0), reset(false), _quit(false), _running(false)
+InputReader::InputReader(): iters(0), style(0), reset(false), _quit(false), _running(false)
 {
 
 }
@@ -54,6 +54,7 @@ void InputReader::readConsole()
 			std::cout << "help -- show this help and exit" << std::endl;
 			std::cout << "status -- view various info" << std::endl;
 			std::cout << "iters N -- set maximum iterations to N" << std::endl;
+			std::cout << "style N -- sets rendering style to N; supported styles: 'heat', 'cold'" << std::endl;
 			std::cout << "reset -- reset to original zoom/position" << std::endl;
 			std::cout << "quit | q | exit -- quits the program" << std::endl;
 			std::cout << "save -- saves image with default filename" << std::endl;
@@ -86,6 +87,34 @@ void InputReader::readConsole()
 		else if(cmd == "reset")
 		{
 			reset = true;
+		}
+		else if(cmd == "style")
+		{
+			std::string stylestr;
+			inputss >> stylestr;
+			bool valid = true;
+
+			if(stylestr == "heat")
+			{
+				style = int(Mandelbrot::RenderStyle::STYLE_HEAT);
+			}
+			else if(stylestr == "cold")
+			{
+				style = int(Mandelbrot::RenderStyle::STYLE_COLD);
+			}
+			else
+			{
+				valid = false;
+			}
+
+			if(valid)
+			{
+				std::cout << "Set style to '" << stylestr << "'." << std::endl;
+			}
+			else
+			{
+				std::cout << "Style not supported!" << std::endl;
+			}
 		}
 		else if(cmd == "quit" || cmd == "q" || cmd == "exit")
 		{
@@ -142,6 +171,17 @@ int InputReader::getIters()
 	{
 		int ret = iters;
 		iters = 0;
+		return ret;
+	}
+	return 0;
+}
+
+int InputReader::getStyle()
+{
+	if(style != 0)
+	{
+		int ret = style;
+		style = 0;
 		return ret;
 	}
 	return 0;

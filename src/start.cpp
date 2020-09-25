@@ -42,7 +42,7 @@ void start()
 	mandelbrot.setThreads(THREADS);
 
 	std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(window.getH(), window.getW());
-	window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
+	window.createMandelbrot(mandelbrotdata, mandelbrot.getIters(), mandelbrot.getStyle());
 
 	std::thread inputreader(&InputReader::readConsole, &glbInputReader);
 	inputreader.detach();
@@ -91,14 +91,14 @@ bool update()
 	{
 		mandelbrot.resize(eventhandler.getDragX(), eventhandler.getDragY(), eventhandler.getDragSquareX(), eventhandler.getDragSquareY(), winW, winH);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, iters, mandelbrot.getStyle());
 	}
 
 	if(glbInputReader.getReset())
 	{
 		mandelbrot.resize(DEFAULT_TOPRIGHT, DEFAULT_BOTTOMLEFT);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
-		window.createMandelbrot(mandelbrotdata, iters);
+		window.createMandelbrot(mandelbrotdata, iters, mandelbrot.getStyle());
 	}
 
 	if(glbInputReader.getStatus())
@@ -116,8 +116,17 @@ bool update()
 	{
 		mandelbrot.setIters(tmp_iters);
 		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
-		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters());
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters(), mandelbrot.getStyle());
 	}
+
+	Mandelbrot::RenderStyle tmp_style = static_cast<Mandelbrot::RenderStyle>(glbInputReader.getStyle());
+	if(tmp_style != Mandelbrot::RenderStyle::STYLE_NONE)
+	{
+		mandelbrot.setStyle(tmp_style);
+		std::vector<unsigned> mandelbrotdata = mandelbrot.getMandelbrot(winW, winH);
+		window.createMandelbrot(mandelbrotdata, mandelbrot.getIters(), mandelbrot.getStyle());
+	}
+
 
 	// Quit can occur either by
 	// (1) A quit event (e.g. the graphics window is closed)
